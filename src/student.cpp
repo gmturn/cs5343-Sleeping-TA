@@ -1,19 +1,39 @@
-#include <iostream>
-#include <random>
-#include <chrono>
+#include <unistd.h>
 
 #include "student.h"
+#include "office.h"
+
+#include "../utility/utility.h"
+
+Student::Student(Office *office_) : office(office_) {}
 
 void Student::program()
 {
-    std::random_device rd;
-    std::mt19937 eng(rd());
-    std::uniform_int_distribution<> distr(1, 3);
+    int sleepTime = generateRandomNumber();
+    std::cout << "Student(" << ID << ") programs for\t" << sleepTime << " seconds\n";
+    sleep(sleepTime);
+}
 
-    int sleepTime = distr(eng);
-    std::cout << "Student (" << ID << ")\t Programs for " << sleepTime << " seconds\n";
+void Student::seekHelp()
+{
+    std::cout << "Student (" << ID << ") seeks help\n";
+    if (office->seekHelp(this))
+    {
+        int sleepTime = generateRandomNumber();
+        std::cout << "Student (" << ID << ") receives help for\t" << sleepTime << " seconds\n";
+        sleep(sleepTime);
+    }
+    else
+    {
+        return;
+    }
+}
 
-    // Randomly sleep for a random period between 1 and 3 seconds
-    std::chrono::seconds sleepDuration(sleepTime);
-    std::this_thread::sleep_for(sleepDuration);
+void Student::work(int ta_numVisits)
+{
+    for (int i = 0; i < ta_numVisits; i++)
+    {
+        seekHelp();
+        program();
+    }
 }

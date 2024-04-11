@@ -17,11 +17,11 @@ add_library(student src/student.cpp)
 add_library(ta src/ta.cpp)
 
 # Main program executable
-add_executable(DiningPhilosophers main.cpp)
-target_link_libraries(DiningPhilosophers student ta)
+add_executable(SleepingTA main.cpp)
+target_link_libraries(SleepingTA student ta)
 
 # If your program or any of the libraries use threads, link them with pthreads
-target_link_libraries(DiningPhilosophers Threads::Threads) # Link pthreads to your main executable
+target_link_libraries(SleepingTA Threads::Threads) # Link pthreads to your main executable
 
 
 
