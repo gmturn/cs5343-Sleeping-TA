@@ -10,9 +10,10 @@ private:
     bool isHelping;
 
 public:
-    void helpStudent();
+    void helpStudent(Student *student);
     void sleep();
     void wakeUp();
+    bool isAvailable();
 };
 
 #endif // TA_H

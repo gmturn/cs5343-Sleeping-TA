@@ -7,33 +7,33 @@
 
 Student::Student(Office *office_) : office(office_) {}
 
-void Student::program()
+bool Student::getHelp()
 {
-    int sleepTime = generateRandomNumber();
-    std::cout << "Student(" << ID << ") programs for\t" << sleepTime << " seconds\n";
-    sleep(sleepTime);
-}
-
-void Student::seekHelp()
-{
-    std::cout << "Student (" << ID << ") seeks help\n";
-    if (office->seekHelp(this))
+    if (office->helpStudent(id))
     {
-        int sleepTime = generateRandomNumber();
-        std::cout << "Student (" << ID << ") receives help for\t" << sleepTime << " seconds\n";
-        sleep(sleepTime);
+        std::cout << "Student(" << id << ") received help\n";
+        return true;
     }
     else
     {
-        return;
+        std::cout << "Student(" << id << ") was denied help - office full\n";
+        return false;
     }
 }
 
-void Student::work(int ta_numVisits)
+void Student::program()
 {
-    for (int i = 0; i < ta_numVisits; i++)
+    int sleepTime = generateRandomNumber();
+    std::cout << "Student(" << id << ") programs for " << sleepTime << " seconds\n";
+    sleep(sleepTime);
+    return;
+}
+
+void Student::work(int numIterations)
+{
+    for (int i = 0; i < numIterations; i++)
     {
-        seekHelp();
+        getHelp();
         program();
     }
 }

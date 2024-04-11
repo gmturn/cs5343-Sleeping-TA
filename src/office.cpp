@@ -6,5 +6,7 @@ Office::Office()
 
 bool Office::seekHelp(Student *student)
 {
-    return false;
+    if (ta.isAvailable())
+    {
+    }
 }

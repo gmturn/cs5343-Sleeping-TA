@@ -9,16 +9,15 @@ class Office;
 class Student
 {
 private:
-    int ID;
-    pthread_t threadID;
+    int id;
     int helpTime;
     Office *office;
+    bool getHelp();
+    void program();
 
 public:
     Student(Office *office_);
-    void program();
-    void seekHelp();
-    void work(int ta_numVisits);
+    void work(int numIterations);
 };
 
 #endif // STUDENT_H

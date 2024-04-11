@@ -10,16 +10,15 @@ class Student;
 class Office
 {
 private:
+    std::mutex ta_mutex;
+    std::counting_semaphore<> q_semaphore;
+    TA *ta;
     int numChairs = 3;
-    std::queue<Student *> studentQueue;
-    std::counting_semaphore<> chairsSemaphore;
 
 public:
     Office();
-    bool seekHelp(Student *student);
-    void studentLeaves(Student *student);
-    void studentPrograms(Student *student);
-    void helpStudent();
+    bool helpStudent(int s_id);
+    void queueStudent(int s_id);
 };
 
 #endif // OFFICE_H
