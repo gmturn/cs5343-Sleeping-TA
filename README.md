@@ -1,3 +1,1 @@
-# cs5343-Sleeping-TA
-
-## To Run the Program
+# cs5343-Sleeping-TA\
