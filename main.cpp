@@ -1,15 +1,32 @@
-#include <iostream>
-#include <cstdlib>
-#include <unistd.h>
-#include "utility/utility.h"
+#include <vector>
+#include <thread>
+#include "src/office.h"
+#include "src/student.h"
+#include "src/ta.h"
+
 int main()
 {
-    std::cout << "Hello, World!" << std::endl;
+    TA ta;
+    Office office(&ta);
 
-    int randomNum = generateRandomNumber(1, 10);
+    std::vector<std::thread> threads;
+    for (int i = 1; i <= 5; ++i)
+    {
+        threads.emplace_back([&office, i]()
+                             {
+            Student student(i, 2, &office, 3);
+            student.work(); });
+    }
 
-    std::cout << randomNum << std::endl;
-    sleep(randomNum);
+    std::thread taThread([&office]()
+                         { office.startHelping(); });
+
+    for (auto &t : threads)
+    {
+        t.join();
+    }
+
+    taThread.detach(); // We detach the TA thread or alternatively could have a stopping condition
 
     return 0;
 }

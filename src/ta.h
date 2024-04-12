@@ -1,19 +1,10 @@
 #ifndef TA_H
 #define TA_H
 
-#include <queue>
-
 class TA
 {
-private:
-    pthread_t threadID;
-    bool isHelping;
-
 public:
-    void helpStudent(Student *student);
-    void sleep();
-    void wakeUp();
-    bool isAvailable();
+    void help(int student_id, int help_time);
 };
 
-#endif // TA_H
+#endif

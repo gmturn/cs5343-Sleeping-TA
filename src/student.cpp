@@ -1,39 +1,31 @@
-#include <unistd.h>
-
 #include "student.h"
-#include "office.h"
-
 #include "../utility/utility.h"
+#include <iostream>
+#include <thread>
 
-Student::Student(Office *office_) : office(office_) {}
+Student::Student(int _id, int _helpTime, Office *_office, int num_iterations) : id(_id), helpTime(_helpTime), office(_office), numIterations(num_iterations) {}
 
-bool Student::getHelp()
+void Student::seekHelp()
 {
-    if (office->helpStudent(id))
+    while (!office->enterOffice(id, helpTime))
     {
-        std::cout << "Student(" << id << ") received help\n";
-        return true;
-    }
-    else
-    {
-        std::cout << "Student(" << id << ") was denied help - office full\n";
-        return false;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
 void Student::program()
 {
-    int sleepTime = generateRandomNumber();
-    std::cout << "Student(" << id << ") programs for " << sleepTime << " seconds\n";
-    sleep(sleepTime);
-    return;
+    int help_time = generateRandomNumber();
+    std::cout << "Student " << id << " programming for " << help_time << " seconds." << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(help_time));
+    std::cout << "Finished helping student " << id << "." << std::endl;
 }
 
-void Student::work(int numIterations)
+void Student::work()
 {
     for (int i = 0; i < numIterations; i++)
     {
-        getHelp();
+        seekHelp();
         program();
     }
 }

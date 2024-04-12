@@ -2,23 +2,25 @@
 #define OFFICE_H
 
 #include <semaphore>
-
+#include <condition_variable>
+#include <mutex>
+#include <queue>
 #include "ta.h"
-
-class Student;
 
 class Office
 {
 private:
-    std::mutex ta_mutex;
-    std::counting_semaphore<> q_semaphore;
+    std::counting_semaphore<3> q_semaphore;
+    std::queue<int> student_ids;
+    std::queue<int> help_times;
+    std::mutex queue_mutex;
+    std::condition_variable queue_cond;
     TA *ta;
-    int numChairs = 3;
 
 public:
-    Office();
-    bool helpStudent(int s_id);
-    void queueStudent(int s_id);
+    Office(TA *_ta);
+    bool enterOffice(int student_id, int help_time);
+    void startHelping();
 };
 
-#endif // OFFICE_H
+#endif

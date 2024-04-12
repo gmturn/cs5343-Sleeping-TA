@@ -1,23 +1,20 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 
-#include <pthread.h>
-#include <iostream>
-
-class Office;
+#include "office.h"
 
 class Student
 {
-private:
+public:
     int id;
     int helpTime;
     Office *office;
-    bool getHelp();
-    void program();
+    int numIterations;
 
-public:
-    Student(Office *office_);
-    void work(int numIterations);
+    Student(int _id, int _helpTime, Office *_office, int num_iterations);
+    void seekHelp();
+    void program();
+    void work();
 };
 
-#endif // STUDENT_H
+#endif
